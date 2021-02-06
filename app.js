@@ -7,9 +7,16 @@ let catfood = new Todo(
   'Friday', 
   'imperative'
 );
+let myfood = new Todo(
+  'get groceries',
+  'run to the store and get some food for me', 
+  'Friday', 
+  'imperative'
+);
 const myTodos = document.createElement('ol');
 const todos = [];
 todos.push(catfood);
+todos.push(myfood);
 populateList(todos);
 document.body.append(myTodos);
 
