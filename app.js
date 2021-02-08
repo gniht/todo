@@ -17,7 +17,7 @@ const myTodos = document.createElement('ol');
 const todos = [];
 todos.push(catfood);
 todos.push(myfood);
-populateList(todos);
+updateList(todos);
 document.body.append(myTodos);
 
 function createTodoCard(todo){
@@ -31,11 +31,22 @@ function createTodoCard(todo){
   dueDate.innerText = `Due by: ${todo.dueDate}`;
   const priority = document.createElement('div');
   priority.innerText = `Priority: ${todo.priority}`;
-  card.append(title, description, dueDate, priority);
+  const completedLabel = document.createElement('label');
+  completedLabel.for = `${todo.title}-completed`;
+  completedLabel.innerText = 'Completed ';
+  const completed = document.createElement('input');
+  completed.type = 'checkbox';
+  completed.id = `${todo.title}-completed`;    
+  card.append(title, 
+    description, 
+    dueDate, 
+    priority, 
+    completedLabel, 
+    completed);  
   return card;  
 }
 
-function populateList(list){
+function updateList(list){
   for(let i = 0; i < list.length; i++){
     let item = document.createElement('li');    
     item.append(createTodoCard(list[i]));
