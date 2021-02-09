@@ -13,12 +13,30 @@ let myfood = new Todo(
   'Friday', 
   'imperative'
 );
+const optionsMenu = document.createElement('div');
+optionsMenu.classList.add('top-center');
+const projectSelect = document.createElement('div');
+const projectSelectLabel = document.createElement('label');
+projectSelectLabel.for = 'project-select';
+projectSelectLabel.innerText = 'Select a project: ';
+const projects = document.createElement('select');
+projects.id = 'project-select';
+const defaultProject = document.createElement('option');
+defaultProject.value = 'default';
+defaultProject.innerText = 'default project';
+projects.append(defaultProject);
+projectSelect.append(projectSelectLabel, projects);
+optionsMenu.append(projectSelect);
+
+
+
+
 const myTodos = document.createElement('ol');
 const todos = [];
 todos.push(catfood);
 todos.push(myfood);
 updateList(todos);
-document.body.append(myTodos);
+document.body.append(optionsMenu, myTodos);
 
 function createTodoCard(todo){
   const card = document.createElement('div');

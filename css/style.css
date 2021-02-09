@@ -7,3 +7,7 @@ li {
   width: 360px;
   padding: 5px;
 }
+
+select {
+  height: fit-content;
+}
