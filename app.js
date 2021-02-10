@@ -13,6 +13,11 @@ let myfood = new Todo(
   'Friday', 
   'imperative'
 );
+
+const hideBtn = document.createElement('button');
+
+hideBtn.innerText = 'Show completed todos';
+let hideCompleted = false;
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
 const projectSelect = document.createElement('div');
@@ -26,7 +31,7 @@ defaultProject.value = 'default';
 defaultProject.innerText = 'default project';
 projects.append(defaultProject);
 projectSelect.append(projectSelectLabel, projects);
-optionsMenu.append(projectSelect);
+optionsMenu.append(hideBtn, projectSelect);
 
 
 
@@ -72,3 +77,15 @@ function updateList(list){
     console.log(myTodos);    
   }
 }
+
+hideBtn.addEventListener('click', e =>{
+  e.preventDefault();  
+  if(e.target.innerText == 'Hide completed todos'){
+    hideCompleted = true;
+    hideBtn.innerText = 'Show completed todos';
+  }else if(e.target.innerText = 'Show completed todos'){
+    hideCompleted = false;
+    hideBtn.innerText = 'Hide completed todos';
+  }
+  // updateList(listFromProject)
+});
