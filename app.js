@@ -15,9 +15,12 @@ let myfood = new Todo(
 );
 
 const hideBtn = document.createElement('button');
-
 hideBtn.innerText = 'Show completed todos';
 let hideCompleted = false;
+
+const newProjectBtn = document.createElement('button');
+newProjectBtn.innerText = 'Create new project';
+
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
 const projectSelect = document.createElement('div');
@@ -31,9 +34,7 @@ defaultProject.value = 'default';
 defaultProject.innerText = 'default project';
 projects.append(defaultProject);
 projectSelect.append(projectSelectLabel, projects);
-optionsMenu.append(hideBtn, projectSelect);
-
-
+optionsMenu.append(hideBtn, newProjectBtn, projectSelect);
 
 
 const myTodos = document.createElement('ol');
@@ -88,4 +89,9 @@ hideBtn.addEventListener('click', e =>{
     hideBtn.innerText = 'Hide completed todos';
   }
   // updateList(listFromProject)
+});
+newProjectBtn.addEventListener('click', e => {
+  e.preventDefault();  
+  let projectName = prompt('enter a project name');
+  // createProject(projectName);
 });
