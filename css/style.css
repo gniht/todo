@@ -1,13 +1,3 @@
-
-li {
-  margin-bottom: 10px;
-}
-.card {  
-  border: 1px solid green;
-  width: 360px;
-  padding: 5px;
-}
-
 select {
   height: fit-content;
 }
