@@ -5,13 +5,15 @@ let catfood = new Todo(
   'get catfood',
   'run to the store and get some food for the cat', 
   'Friday', 
-  'imperative'
+  'imperative',
+  'true'
 );
 let myfood = new Todo(
   'get groceries',
   'run to the store and get some food for me', 
   'Friday', 
-  'imperative'
+  'imperative',
+  'false'
 );
 
 const hideBtn = document.createElement('button');
@@ -63,6 +65,9 @@ function createTodoCard(todo){
   completedLabel.innerText = 'Completed ';
   const completed = document.createElement('input');
   completed.type = 'checkbox';
+  if(todo.checked == 'true'){
+    completed.checked = true;
+  }
   completed.id = `${todo.title}-completed`;    
   card.append(title, 
     description, 
