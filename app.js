@@ -35,9 +35,19 @@ projects.id = 'project-select';
 const defaultProject = document.createElement('option');
 // defaultProject.value = '0'; this value not needed?
 defaultProject.innerText = 'default project';
+const newProjectNameField = document.createElement('div');
+const newProjectNameLabel = document.createElement('label');
+newProjectNameLabel.innerText = 'New Project name: ';
+const projectNameField = document.createElement('input');
+projectNameField.type = 'text';
+projectNameField.placeholder = 'Enter project name...';
+newProjectNameField.append(
+  newProjectNameLabel, 
+  projectNameField, 
+  newProjectBtn);
 projects.append(defaultProject);
 projectSelect.append(projectSelectLabel, projects);
-optionsMenu.append(newProjectBtn, projectSelect);
+optionsMenu.append(projectSelect, newProjectNameField);
 
 let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
@@ -52,24 +62,19 @@ hideBtn.addEventListener('click', e =>{
   e.preventDefault();  
   if(e.target.innerText == 'Hide completed todos'){
     hideCompleted = true;
-    hideBtn.innerText = 'Show completed todos';
-    
-    
-    updateList(todos);
-    
+    hideBtn.innerText = 'Show completed todos';    
+    updateList(todos);    
   }else if(e.target.innerText = 'Show completed todos'){
     hideCompleted = false;
-    hideBtn.innerText = 'Hide completed todos';
-    
-    
+    hideBtn.innerText = 'Hide completed todos';    
     updateList(todos);
-  }
-  // updateList(listFromProject)
+  }  
 });
+
 newProjectBtn.addEventListener('click', e => {
   e.preventDefault();
   let option = document.createElement("option");  
-  let projectName = prompt('enter a project name');  
+  let projectName = projectNameField.value;  
   if(projectName){
     option.innerText = projectName;
     projects.append(option);
