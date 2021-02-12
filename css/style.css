@@ -1,6 +1,22 @@
+
 select {
   height: fit-content;
 }
  button {
    height: fit-content;
  }
+ form label {
+   display: block;
+   background-color: var(--main-background-color);
+ }
+.split-left {
+  background-color: var(--main-background-color);
+}
+.split-right {
+  background-color: var(--main-background-color);
+}
+#newTodoBtn {    
+  display: block;
+  margin-top: 10px;
+}
+

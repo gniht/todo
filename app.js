@@ -18,16 +18,59 @@ let myfood = new Todo(
 
 const controlBtns = document.createElement('div'); 
 let newTodoBtn = document.createElement('button');
+newTodoBtn.id = 'newTodoBtn';
 newTodoBtn.textContent = 'Create new todo';
 const hideBtn = document.createElement('button');
 hideBtn.innerText = 'Show completed todos';
 controlBtns.classList.add('split-left');
 controlBtns.style = "background-color: var(--main-background-color)";
 let hideCompleted = true;
-controlBtns.append(newTodoBtn, hideBtn);
+controlBtns.append(hideBtn);
 
 const newProjectBtn = document.createElement('button');
 newProjectBtn.innerText = 'Create new project';
+
+//new todo form
+const newTodoForm = document.createElement('form');
+newTodoForm.classList.add('split-right');
+const titleLabel = document.createElement('label');
+titleLabel.innerText = 'Todo title: ';
+titleLabel.for = 'titleInput';
+const titleInput = document.createElement('input');
+titleInput.id = 'titleInput';
+titleInput.placeholder = 'Enter todo title...';
+const descriptionLabel = document.createElement('label');
+descriptionLabel.for = 'todoDescription';
+descriptionLabel.innerText = 'Description: ';
+const todoDescription = document.createElement('input');
+todoDescription.id = 'todoDescription';
+todoDescription.type = 'textarea';
+todoDescription.placeholder = 'Todo description...';
+const newTodoDueDateLabel = document.createElement('label');
+newTodoDueDateLabel.innerText = 'Date due: '
+newTodoDueDateLabel.for = 'newTodoDueDate';
+const newTodoDueDate = document.createElement('input');
+newTodoDueDate.type = 'text';
+newTodoDueDate.id = 'newTodoDueDate';
+newTodoDueDate.placeholder = 'Enter date due...';
+const newTodoPriorityLabel = document.createElement('label');
+newTodoPriorityLabel.for = 'newTodoPriority';
+newTodoPriorityLabel.innerText = 'Priority:';
+const newTodoPriority = document.createElement('input');
+newTodoPriority.type = 'text';
+newTodoPriority.id = 'newTodoPriority';
+newTodoPriority.placeholder = 'Assign urgency...';
+newTodoForm.append(titleLabel, 
+  titleInput, 
+  descriptionLabel, 
+  todoDescription,
+  newTodoDueDateLabel,
+  newTodoDueDate,
+  newTodoPriorityLabel,
+  newTodoPriority,
+  newTodoBtn
+  );
+
 
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
@@ -54,6 +97,8 @@ projects.append(defaultProject);
 projectSelect.append(projectSelectLabel, projects);
 optionsMenu.append(projectSelect, newProjectNameField);
 
+
+
 let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 let allProjects = [[]];
@@ -62,7 +107,13 @@ let todos = allProjects[projects.selectedIndex];
 todos.push(catfood);
 todos.push(myfood);
 updateList(todos);
-document.body.append(optionsMenu, myTodos, controlBtns);
+document.body.append(optionsMenu, myTodos, newTodoForm, controlBtns);
+
+
+newTodoBtn.addEventListener('click', e => {
+  //todo: add todo to current project
+
+});
 
 projects.addEventListener('click', e => {
   e.preventDefault();
