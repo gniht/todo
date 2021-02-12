@@ -33,7 +33,7 @@ projectSelectLabel.innerText = 'Select a project: ';
 const projects = document.createElement('select');
 projects.id = 'project-select';
 const defaultProject = document.createElement('option');
-// defaultProject.value = '0'; this value not needed?
+// defaultProject.value = '0'; is this value needed?
 defaultProject.innerText = 'default project';
 const newProjectNameField = document.createElement('div');
 const newProjectNameLabel = document.createElement('label');
@@ -52,11 +52,19 @@ optionsMenu.append(projectSelect, newProjectNameField);
 let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 let allProjects = [[]];
-const todos = allProjects[projects.selectedIndex];
+let todos = allProjects[projects.selectedIndex];
 todos.push(catfood);
 todos.push(myfood);
 updateList(todos);
 document.body.append(optionsMenu, myTodos, hideBtn);
+
+projects.addEventListener('click', e => {
+  e.preventDefault();
+  if(e.target.id == 'project-select'){
+  todos = allProjects[projects.selectedIndex];
+  updateList(todos);
+  }  
+});
 
 hideBtn.addEventListener('click', e =>{
   e.preventDefault();  
@@ -80,6 +88,7 @@ newProjectBtn.addEventListener('click', e => {
     projects.append(option);
     let optionArr = [];
     allProjects.push(optionArr);
+    projectNameField.value = '';
     console.log(allProjects);
   }  
 });
@@ -114,14 +123,12 @@ function createTodoCard(todo){
 }
 
 function updateList(list){
-  // myTodos.childNodes.forEach(li => {
-  //   myTodos.removeChild(li);
-  // });
+  //remove existing display of Todos
   while(myTodos.firstChild){
     myTodos.removeChild(myTodos.firstChild);
   }
   
-  console.log(myTodos)
+  console.log(myTodos)//
   for(let i = 0; i < list.length; i++){
     let item = document.createElement('li');    
     item.append(createTodoCard(list[i]));
