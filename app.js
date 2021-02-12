@@ -1,4 +1,3 @@
-
 import Todo from './todo.js';
 
 let catfood = new Todo(
@@ -6,26 +5,26 @@ let catfood = new Todo(
   'run to the store and get some food for the cat', 
   'Friday', 
   'imperative',
-  'true'
+  'false'
 );
 let myfood = new Todo(
   'get groceries',
   'run to the store and get some food for me', 
   'Friday', 
   'imperative',
-  'false'
+  'true'
 );
 
-const controlBtns = document.createElement('div'); 
+ 
 let newTodoBtn = document.createElement('button');
 newTodoBtn.id = 'newTodoBtn';
 newTodoBtn.textContent = 'Create new todo';
 const hideBtn = document.createElement('button');
+hideBtn.id = 'hideBtn';
+hideBtn.style.backgroundColor = 'white';
 hideBtn.innerText = 'Show completed todos';
-controlBtns.classList.add('split-left');
-controlBtns.style = "background-color: var(--main-background-color)";
+hideBtn.classList.add('split-left');
 let hideCompleted = true;
-controlBtns.append(hideBtn);
 
 const newProjectBtn = document.createElement('button');
 newProjectBtn.innerText = 'Create new project';
@@ -71,7 +70,6 @@ newTodoForm.append(titleLabel,
   newTodoBtn
   );
 
-
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
 const projectSelect = document.createElement('div');
@@ -97,8 +95,6 @@ projects.append(defaultProject);
 projectSelect.append(projectSelectLabel, projects);
 optionsMenu.append(projectSelect, newProjectNameField);
 
-
-
 let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 let allProjects = [[]];
@@ -107,10 +103,11 @@ let todos = allProjects[projects.selectedIndex];
 todos.push(catfood);
 todos.push(myfood);
 updateList(todos);
-document.body.append(optionsMenu, myTodos, newTodoForm, controlBtns);
-
+document.body.append(optionsMenu, myTodos, newTodoForm);
 
 newTodoBtn.addEventListener('click', e => {
+  e.preventDefault();
+  e.stopPropagation();
   //todo: add todo to current project
 
 });
@@ -120,7 +117,8 @@ projects.addEventListener('click', e => {
   if(e.target.id == 'project-select'){
   todos = allProjects[projects.selectedIndex];
   updateList(todos);
-  }  
+  }
+  e.stopPropagation();  
 });
 
 hideBtn.addEventListener('click', e =>{
@@ -191,8 +189,9 @@ function updateList(list){
     let item = document.createElement('li');    
     item.append(createTodoCard(list[i]));
     if(list[i].checked == 'false' || hideCompleted == false){
-        myTodos.append(item);
+        myTodos.append(item);                
       }      
-    }    
+    }
+    myTodos.append(hideBtn);        
   }           
 
