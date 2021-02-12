@@ -16,10 +16,15 @@ let myfood = new Todo(
   'false'
 );
 
+const controlBtns = document.createElement('div'); 
+let newTodoBtn = document.createElement('button');
+newTodoBtn.textContent = 'Create new todo';
 const hideBtn = document.createElement('button');
 hideBtn.innerText = 'Show completed todos';
-hideBtn.classList.add('split-left');
+controlBtns.classList.add('split-left');
+controlBtns.style = "background-color: var(--main-background-color)";
 let hideCompleted = true;
+controlBtns.append(newTodoBtn, hideBtn);
 
 const newProjectBtn = document.createElement('button');
 newProjectBtn.innerText = 'Create new project';
@@ -53,10 +58,11 @@ let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 let allProjects = [[]];
 let todos = allProjects[projects.selectedIndex];
+
 todos.push(catfood);
 todos.push(myfood);
 updateList(todos);
-document.body.append(optionsMenu, myTodos, hideBtn);
+document.body.append(optionsMenu, myTodos, controlBtns);
 
 projects.addEventListener('click', e => {
   e.preventDefault();
@@ -89,7 +95,7 @@ newProjectBtn.addEventListener('click', e => {
     let optionArr = [];
     allProjects.push(optionArr);
     projectNameField.value = '';
-    console.log(allProjects);
+    //console.log(allProjects);
   }  
 });
 
@@ -109,6 +115,7 @@ function createTodoCard(todo){
   completedLabel.innerText = 'Completed ';
   const completed = document.createElement('input');
   completed.type = 'checkbox';
+  //completed.id = `${todo.title}-checked`;
   if(todo.checked == 'true'){
     completed.checked = true;
   }
