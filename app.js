@@ -120,11 +120,12 @@ newTodoBtn.addEventListener('click', e => {
         newTodoDueDate.value,
         newTodoPriority.value      
       ));
-    newTodoForm.reset();
+    newTodoForm.reset();        
   }else{
     alert("you must complete all fields to create a new todo!");
   }
-  updateList(myTodos);  
+  
+  updateList(todos);  
 });
 
 projects.addEventListener('click', e => {
@@ -141,7 +142,7 @@ hideBtn.addEventListener('click', e =>{
   if(e.target.innerText == 'Hide completed todos'){
     hideCompleted = true;
     hideBtn.innerText = 'Show completed todos';    
-    updateList(todos);    
+    updateList(todos);        
   }else if(e.target.innerText = 'Show completed todos'){
     hideCompleted = false;
     hideBtn.innerText = 'Hide completed todos';    
@@ -197,9 +198,7 @@ function updateList(list){
   //remove existing display of Todos
   while(myTodos.firstChild){
     myTodos.removeChild(myTodos.firstChild);
-  }
-  
-  console.log(myTodos)//
+  }  
   for(let i = 0; i < list.length; i++){
     let item = document.createElement('li');    
     item.append(createTodoCard(list[i]));
