@@ -19,7 +19,7 @@ let myfood = new Todo(
 const hideBtn = document.createElement('button');
 hideBtn.innerText = 'Show completed todos';
 hideBtn.classList.add('split-left');
-let hideCompleted = false;
+let hideCompleted = true;
 
 const newProjectBtn = document.createElement('button');
 newProjectBtn.innerText = 'Create new project';
@@ -39,8 +39,7 @@ projects.append(defaultProject);
 projectSelect.append(projectSelectLabel, projects);
 optionsMenu.append(newProjectBtn, projectSelect);
 
-
-const myTodos = document.createElement('ol');
+let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 let allProjects = [[]];
 const todos = allProjects[projects.selectedIndex];
@@ -48,6 +47,37 @@ todos.push(catfood);
 todos.push(myfood);
 updateList(todos);
 document.body.append(optionsMenu, myTodos, hideBtn);
+
+hideBtn.addEventListener('click', e =>{
+  e.preventDefault();  
+  if(e.target.innerText == 'Hide completed todos'){
+    hideCompleted = true;
+    hideBtn.innerText = 'Show completed todos';
+    
+    
+    updateList(todos);
+    
+  }else if(e.target.innerText = 'Show completed todos'){
+    hideCompleted = false;
+    hideBtn.innerText = 'Hide completed todos';
+    
+    
+    updateList(todos);
+  }
+  // updateList(listFromProject)
+});
+newProjectBtn.addEventListener('click', e => {
+  e.preventDefault();
+  let option = document.createElement("option");  
+  let projectName = prompt('enter a project name');  
+  if(projectName){
+    option.innerText = projectName;
+    projects.append(option);
+    let optionArr = [];
+    allProjects.push(optionArr);
+    console.log(allProjects);
+  }  
+});
 
 function createTodoCard(todo){
   const card = document.createElement('div');
@@ -79,33 +109,20 @@ function createTodoCard(todo){
 }
 
 function updateList(list){
+  // myTodos.childNodes.forEach(li => {
+  //   myTodos.removeChild(li);
+  // });
+  while(myTodos.firstChild){
+    myTodos.removeChild(myTodos.firstChild);
+  }
+  
+  console.log(myTodos)
   for(let i = 0; i < list.length; i++){
     let item = document.createElement('li');    
     item.append(createTodoCard(list[i]));
-    myTodos.append(item);        
-  }
-}
+    if(list[i].checked == 'false' || hideCompleted == false){
+        myTodos.append(item);
+      }      
+    }    
+  }           
 
-hideBtn.addEventListener('click', e =>{
-  e.preventDefault();  
-  if(e.target.innerText == 'Hide completed todos'){
-    hideCompleted = true;
-    hideBtn.innerText = 'Show completed todos';
-  }else if(e.target.innerText = 'Show completed todos'){
-    hideCompleted = false;
-    hideBtn.innerText = 'Hide completed todos';
-  }
-  // updateList(listFromProject)
-});
-newProjectBtn.addEventListener('click', e => {
-  e.preventDefault();
-  let option = document.createElement("option");  
-  let projectName = prompt('enter a project name');  
-  if(projectName){
-    option.innerText = projectName;
-    projects.append(option);
-    let optionArr = [];
-    allProjects.push(optionArr);
-    console.log(allProjects);
-  }  
-});
