@@ -70,6 +70,7 @@ newTodoForm.append(titleLabel,
   newTodoBtn
   );
 
+
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
 const projectSelect = document.createElement('div');
@@ -109,7 +110,21 @@ newTodoBtn.addEventListener('click', e => {
   e.preventDefault();
   e.stopPropagation();
   //todo: add todo to current project
-
+  if(titleInput.value &&
+    todoDescription.value &&
+    newTodoDueDate.value &&
+    newTodoPriority.value){
+      todos.push(new Todo(
+        titleInput.value,
+        todoDescription.value,
+        newTodoDueDate.value,
+        newTodoPriority.value      
+      ));
+    newTodoForm.reset();
+  }else{
+    alert("you must complete all fields to create a new todo!");
+  }
+  updateList(myTodos);  
 });
 
 projects.addEventListener('click', e => {
