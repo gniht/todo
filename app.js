@@ -1,5 +1,7 @@
 import Todo from './todo.js';
 
+
+//examples for default project
 let catfood = new Todo(
   'get catfood',
   'run to the store and get some food for the cat', 
@@ -14,8 +16,7 @@ let myfood = new Todo(
   'imperative',
   'true'
 );
-
- 
+//localStorage.clear();
 let newTodoBtn = document.createElement('button');
 newTodoBtn.id = 'newTodoBtn';
 newTodoBtn.textContent = 'Create new todo';
@@ -70,6 +71,12 @@ newTodoForm.append(titleLabel,
   newTodoBtn
   );
 
+let projectList;
+if(localStorage.getItem('projectList') == null){   
+  localStorage.setItem('projectList', JSON.stringify({"default project": []}));    
+}
+projectList = JSON.parse(localStorage.getItem('projectList'));
+console.log(projectList);  
 
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
@@ -79,9 +86,11 @@ projectSelectLabel.for = 'project-select';
 projectSelectLabel.innerText = 'Select a project: ';
 const projects = document.createElement('select');
 projects.id = 'project-select';
-const defaultProject = document.createElement('option');
+updateProjectList();
+//const defaultProject = document.createElement('option');
 // defaultProject.value = '0'; is this value needed?
-defaultProject.innerText = 'default project';
+//efaultProject.innerText = 'default project';
+
 const newProjectNameField = document.createElement('div');
 const newProjectNameLabel = document.createElement('label');
 newProjectNameLabel.innerText = 'New Project name: ';
@@ -92,18 +101,27 @@ newProjectNameField.append(
   newProjectNameLabel, 
   projectNameField, 
   newProjectBtn);
-projects.append(defaultProject);
+projects.append();
 projectSelect.append(projectSelectLabel, projects);
 optionsMenu.append(projectSelect, newProjectNameField);
 
 let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
-let allProjects = [[]];
-let todos = allProjects[projects.selectedIndex];
+//localStorage.setItem('user', JSON.stringify(user));
+let todos, allProjects;
+if(localStorage.getItem('allProjects') == null){ 
+  localStorage.setItem('allProjects', JSON.stringify([[]]));
+  todos = allProjects[projects.selectedIndex];
+  todos.push(catfood);
+  todos.push(myfood); 
+}
+allProjects = JSON.parse(localStorage.getItem('allProjects'));
 
-todos.push(catfood);
-todos.push(myfood);
-updateList(todos);
+console.log(allProjects);
+todos = allProjects[projects.selectedIndex];
+
+
+
 document.body.append(optionsMenu, myTodos, newTodoForm);
 
 newTodoBtn.addEventListener('click', e => {
@@ -124,7 +142,7 @@ newTodoBtn.addEventListener('click', e => {
   }else{
     alert("you must complete all fields to create a new todo!");
   }
-  
+  localStorage.setItem('allProjects', JSON.stringify(allProjects));  
   updateList(todos);  
 });
 
@@ -151,20 +169,29 @@ hideBtn.addEventListener('click', e =>{
 });
 
 newProjectBtn.addEventListener('click', e => {
-  e.preventDefault();
-  let option = document.createElement("option");  
-  let projectName = projectNameField.value;  
+  e.preventDefault();    
+  let projectName = projectNameField.value;
+
   if(projectName){
-    option.innerText = projectName;
-    projects.append(option);
-    let optionArr = [];
-    allProjects.push(optionArr);
-    projectNameField.value = '';
-    //console.log(allProjects);
+    createProject(projectName);
+    projectNameField.value = '';    
   }  
 });
 
-function createTodoCard(todo){
+function createProject(name){
+  let option = document.createElement("option");
+  option.innerText = name;
+  projects.append(option);
+  let optionArr = [];
+  projectList.push(name);
+  allProjects.push(optionArr);
+  
+  localStorage.setItem('projectList', JSON.stringify(projectList));
+  //console.log(localStorage.getItem(JSON.parse('projectList')));
+  localStorage.setItem('allProjects', JSON.stringify(allProjects));
+}
+
+function createTodoCard(todo, index = null){
   const card = document.createElement('div');
   card.classList.add('card');
   const title = document.createElement('h3');
@@ -180,6 +207,11 @@ function createTodoCard(todo){
   completedLabel.innerText = 'Completed ';
   const completed = document.createElement('input');
   completed.type = 'checkbox';
+  console.log(typeof(index));
+  if(index != null && typeof(index) == 'number'){
+    completed.id = `${index}`;    
+  }
+  
   //completed.id = `${todo.title}-checked`;
   if(todo.checked == 'true'){
     completed.checked = true;
@@ -200,12 +232,38 @@ function updateList(list){
     myTodos.removeChild(myTodos.firstChild);
   }  
   for(let i = 0; i < list.length; i++){
-    let item = document.createElement('li');    
-    item.append(createTodoCard(list[i]));
+    let item = document.createElement('li');
+        
+    item.append(createTodoCard(list[i], i));
     if(list[i].checked == 'false' || hideCompleted == false){
         myTodos.append(item);                
       }      
     }
     myTodos.append(hideBtn);        
-  }           
+  }
+  
+  function mkOption(content){
+    if(content){
+      let opt = document.createElement('option');
+      opt.textContent = content;
+      return opt; 
+    }  
+    return -1;
+  }
+  function updateProjectList(){
+    while(projects.firstChild){
+      projects.removeChild(projects.firstChild);
+    } 
+    for(let proj in projectList){
+      projects.append(mkOption(`${proj}`));
+    }
+  }
+  // localStorage.setItem('user', JSON.stringify(user));
 
+  // Then to retrieve it from the store and convert to an object again:
+  
+  // var user = JSON.parse(localStorage.getItem('user'));
+  
+  // If we need to delete all entries of the store we can simply do:
+  
+  //localStorage.clear();
