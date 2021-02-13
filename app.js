@@ -179,13 +179,10 @@ newProjectBtn.addEventListener('click', e => {
 });
 
 function createProject(name){
-  let option = document.createElement("option");
-  option.innerText = name;
-  projects.append(option);
-  let optionArr = [];
-  projectList.push(name);
-  allProjects.push(optionArr);
-  
+  projects.append(mkOption(name));
+  //let optionArr = [];
+  projectList[`${name}`] = [];
+  //allProjects.push(optionArr);  
   localStorage.setItem('projectList', JSON.stringify(projectList));
   //console.log(localStorage.getItem(JSON.parse('projectList')));
   localStorage.setItem('allProjects', JSON.stringify(allProjects));
