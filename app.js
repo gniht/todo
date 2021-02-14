@@ -75,8 +75,7 @@ let projectList;
 if(localStorage.getItem('projectList') == null){   
   localStorage.setItem('projectList', JSON.stringify({"default project": []}));    
 }
-projectList = JSON.parse(localStorage.getItem('projectList'));
-console.log(projectList);  
+projectList = JSON.parse(localStorage.getItem('projectList')); 
 
 const optionsMenu = document.createElement('div');
 optionsMenu.classList.add('top-center');
@@ -143,7 +142,8 @@ projects.addEventListener('click', e => {
 });
 
 hideBtn.addEventListener('click', e =>{
-  e.preventDefault();  
+  e.preventDefault();
+  e.stopPropagation();  
   if(e.target.innerText == 'Hide completed todos'){
     hideCompleted = true;
     hideBtn.innerText = 'Show completed todos';    
@@ -156,20 +156,19 @@ hideBtn.addEventListener('click', e =>{
 });
 
 myTodos.addEventListener('click', e => {
-  let chkIndex = '';  
   if(e.target.type == 'checkbox'){
+    let chkIndex = '';  
     chkIndex = parseInt(e.target.id);
-  }
-  console.log(todos)  
+    
   if(typeof(chkIndex) == 'number' && todos[chkIndex].checked === 'true'){
     todos[chkIndex].checked = 'false';
   }else{
     todos[chkIndex].checked = 'true';
   }
-  console.log(chkIndex);
   localStorage.setItem('projectList', JSON.stringify(projectList));
   updateProjectList();
   updateList(todos);
+  }
 });
 
 
@@ -204,13 +203,12 @@ function createTodoCard(todo, index = null){
   completedLabel.for = `${todo.title}-completed`;
   completedLabel.innerText = 'Completed ';
   const completed = document.createElement('input');
-  completed.type = 'checkbox';
-  console.log(typeof(index));
+  completed.type = 'checkbox';  
   if(index != null){
     completed.id = `${index}`;    
   }  
   if(todo.checked == 'true'){
-    completed.checked = true;
+    completed.checked = 'true';
   }      
   card.append(title, 
     description, 
