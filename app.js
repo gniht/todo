@@ -109,16 +109,16 @@ let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 //localStorage.setItem('user', JSON.stringify(user));
 let todos, allProjects;
-if(localStorage.getItem('allProjects') == null){ 
-  localStorage.setItem('allProjects', JSON.stringify([[]]));
-  todos = allProjects[projects.selectedIndex];
-  todos.push(catfood);
-  todos.push(myfood); 
-}
-allProjects = JSON.parse(localStorage.getItem('allProjects'));
+// if(localStorage.getItem('allProjects') == null){ 
+//   localStorage.setItem('allProjects', JSON.stringify([[]]));
+//   todos = allProjects[projects.selectedIndex];
+//   todos.push(catfood);
+//   todos.push(myfood); 
+// }
+// allProjects = JSON.parse(localStorage.getItem('allProjects'));
 
-console.log(allProjects);
-todos = allProjects[projects.selectedIndex];
+// console.log(allProjects);
+// todos = allProjects[projects.selectedIndex.textContent];
 
 
 
@@ -142,14 +142,14 @@ newTodoBtn.addEventListener('click', e => {
   }else{
     alert("you must complete all fields to create a new todo!");
   }
-  localStorage.setItem('allProjects', JSON.stringify(allProjects));  
+  localStorage.setItem('projectList', JSON.stringify(projectList));  
   updateList(todos);  
 });
 
 projects.addEventListener('click', e => {
   e.preventDefault();
   if(e.target.id == 'project-select'){
-  todos = allProjects[projects.selectedIndex];
+  todos = projectList[e.target.children[projects.selectedIndex].textContent];  
   updateList(todos);
   }
   e.stopPropagation();  
@@ -185,8 +185,10 @@ function createProject(name){
   //allProjects.push(optionArr);  
   localStorage.setItem('projectList', JSON.stringify(projectList));
   //console.log(localStorage.getItem(JSON.parse('projectList')));
-  localStorage.setItem('allProjects', JSON.stringify(allProjects));
+  //localStorage.setItem('allProjects', JSON.stringify(allProjects));
 }
+
+
 
 function createTodoCard(todo, index = null){
   const card = document.createElement('div');
