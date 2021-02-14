@@ -22,12 +22,20 @@ let myfood = new Todo(
 let newTodoBtn = document.createElement('button');
 newTodoBtn.id = 'newTodoBtn';
 newTodoBtn.textContent = 'Create new todo';
+const controlBtns = document.createElement('div');
+controlBtns.classList.add('split-left');
+controlBtns.id = 'controlBtns';
+const deleteCompletedTodos = document.createElement('button');
+deleteCompletedTodos.textContent = 'Delete completed todos';
+deleteCompletedTodos.classList.add('split-left');
+deleteCompletedTodos.style.backgroundColor = 'pink';
 const hideBtn = document.createElement('button');
 hideBtn.id = 'hideBtn';
-hideBtn.style.backgroundColor = 'white';
+hideBtn.style.backgroundColor = 'lightblue';
 hideBtn.innerText = 'Show completed todos';
 hideBtn.classList.add('split-left');
 let hideCompleted = true;
+controlBtns.append(hideBtn, deleteCompletedTodos);
 
 const newProjectBtn = document.createElement('button');
 newProjectBtn.innerText = 'Create new project';
@@ -106,6 +114,7 @@ let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
 
 document.body.append(optionsMenu, myTodos, newTodoForm);
+
 let todos;
 
 newTodoBtn.addEventListener('click', e => {
@@ -179,6 +188,21 @@ newProjectBtn.addEventListener('click', e => {
   }  
 });
 
+deleteCompletedTodos.addEventListener('click', e => {
+  e.preventDefault();  
+  
+  let verify = prompt("Enter 'Y' or 'Yes' to delete all completed todos");
+  if(verify == 'yes' || 'Yes' || 'YES' || 'Y' || 'y'){
+    for(let i = todos.length-1; i >= 0; i--){
+      if(todos[i].checked == 'true'){        
+        todos.splice( i, 1);                
+      }
+      updateList(todos);
+      localStorage.setItem('projectList', JSON.stringify(projectList));
+    }      
+  }
+});
+
 function createProject(name){
   projects.append(mkOption(name));  
   projectList[`${name}`] = [];   
@@ -229,7 +253,8 @@ function updateList(list){
         myTodos.append(item);                
       }      
     }
-    myTodos.append(hideBtn);        
+
+    myTodos.append(controlBtns);        
   }
   
   function mkOption(content){

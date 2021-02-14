@@ -26,6 +26,9 @@ select {
 li {
   margin-bottom: 10px;
 }
+#controlBtns{
+  display: flex;
+}
 
 
 
