@@ -107,22 +107,9 @@ optionsMenu.append(projectSelect, newProjectNameField);
 
 let myTodos = document.createElement('ol');
 myTodos.classList.add('split-left');
-//localStorage.setItem('user', JSON.stringify(user));
-let todos, allProjects;
-// if(localStorage.getItem('allProjects') == null){ 
-//   localStorage.setItem('allProjects', JSON.stringify([[]]));
-//   todos = allProjects[projects.selectedIndex];
-//   todos.push(catfood);
-//   todos.push(myfood); 
-// }
-// allProjects = JSON.parse(localStorage.getItem('allProjects'));
-
-// console.log(allProjects);
-// todos = allProjects[projects.selectedIndex.textContent];
-
-
 
 document.body.append(optionsMenu, myTodos, newTodoForm);
+let todos;
 
 newTodoBtn.addEventListener('click', e => {
   e.preventDefault();
@@ -179,16 +166,10 @@ newProjectBtn.addEventListener('click', e => {
 });
 
 function createProject(name){
-  projects.append(mkOption(name));
-  //let optionArr = [];
-  projectList[`${name}`] = [];
-  //allProjects.push(optionArr);  
+  projects.append(mkOption(name));  
+  projectList[`${name}`] = [];   
   localStorage.setItem('projectList', JSON.stringify(projectList));
-  //console.log(localStorage.getItem(JSON.parse('projectList')));
-  //localStorage.setItem('allProjects', JSON.stringify(allProjects));
 }
-
-
 
 function createTodoCard(todo, index = null){
   const card = document.createElement('div');
@@ -209,9 +190,7 @@ function createTodoCard(todo, index = null){
   console.log(typeof(index));
   if(index != null && typeof(index) == 'number'){
     completed.id = `${index}`;    
-  }
-  
-  //completed.id = `${todo.title}-checked`;
+  }  
   if(todo.checked == 'true'){
     completed.checked = true;
   }
