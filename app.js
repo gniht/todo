@@ -16,7 +16,9 @@ let myfood = new Todo(
   'imperative',
   'true'
 );
+
 //localStorage.clear();
+
 let newTodoBtn = document.createElement('button');
 newTodoBtn.id = 'newTodoBtn';
 newTodoBtn.textContent = 'Create new todo';
@@ -30,7 +32,6 @@ let hideCompleted = true;
 const newProjectBtn = document.createElement('button');
 newProjectBtn.innerText = 'Create new project';
 
-//new todo form
 const newTodoForm = document.createElement('form');
 newTodoForm.classList.add('split-right');
 const titleLabel = document.createElement('label');
@@ -86,9 +87,6 @@ projectSelectLabel.innerText = 'Select a project: ';
 const projects = document.createElement('select');
 projects.id = 'project-select';
 updateProjectList();
-//const defaultProject = document.createElement('option');
-// defaultProject.value = '0'; is this value needed?
-//efaultProject.innerText = 'default project';
 
 const newProjectNameField = document.createElement('div');
 const newProjectNameLabel = document.createElement('label');
@@ -171,7 +169,6 @@ myTodos.addEventListener('click', e => {
   }
 });
 
-
 newProjectBtn.addEventListener('click', e => {
   e.preventDefault();    
   let projectName = projectNameField.value;
@@ -251,12 +248,3 @@ function updateList(list){
       projects.append(mkOption(`${proj}`));
     }
   }
-  // localStorage.setItem('user', JSON.stringify(user));
-
-  // Then to retrieve it from the store and convert to an object again:
-  
-  // var user = JSON.parse(localStorage.getItem('user'));
-  
-  // If we need to delete all entries of the store we can simply do:
-  
-  //localStorage.clear();
