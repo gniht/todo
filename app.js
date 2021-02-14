@@ -155,6 +155,24 @@ hideBtn.addEventListener('click', e =>{
   }  
 });
 
+myTodos.addEventListener('click', e => {
+  let chkIndex = '';  
+  if(e.target.type == 'checkbox'){
+    chkIndex = parseInt(e.target.id);
+  }
+  console.log(todos)  
+  if(typeof(chkIndex) == 'number' && todos[chkIndex].checked === 'true'){
+    todos[chkIndex].checked = 'false';
+  }else{
+    todos[chkIndex].checked = 'true';
+  }
+  console.log(chkIndex);
+  localStorage.setItem('projectList', JSON.stringify(projectList));
+  updateProjectList();
+  updateList(todos);
+});
+
+
 newProjectBtn.addEventListener('click', e => {
   e.preventDefault();    
   let projectName = projectNameField.value;
@@ -188,13 +206,12 @@ function createTodoCard(todo, index = null){
   const completed = document.createElement('input');
   completed.type = 'checkbox';
   console.log(typeof(index));
-  if(index != null && typeof(index) == 'number'){
+  if(index != null){
     completed.id = `${index}`;    
   }  
   if(todo.checked == 'true'){
     completed.checked = true;
-  }
-  completed.id = `${todo.title}-completed`;    
+  }      
   card.append(title, 
     description, 
     dueDate, 
